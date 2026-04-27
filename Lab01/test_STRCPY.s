@@ -51,50 +51,13 @@ _start:
     //   4. Increment both pointers
     //   5. Loop back
     
-copy_loop:
-    // -------------------------------------------------------------------------
-    // TODO #1: Load a byte from the source address [X0] into W2
-    // Syntax: LDRB Wt, [Xn]   (Load Register Byte)
-    // -------------------------------------------------------------------------
-    
-    // YOUR CODE HERE
-    
-    // -------------------------------------------------------------------------
-    // TODO #2: Store the byte from W2 to the destination address [X1]
-    // Syntax: STRB Wt, [Xn]   (Store Register Byte)
-    // -------------------------------------------------------------------------
-    
-    // YOUR CODE HERE
-    
-    // -------------------------------------------------------------------------
-    // TODO #3: Check if the byte was the null terminator (0)
-    // If W2 == 0, branch to 'done'
-    // Syntax: CBZ Wt, label   (Compare and Branch if Zero)
-    // -------------------------------------------------------------------------
-    
-    // YOUR CODE HERE
-    
-    // -------------------------------------------------------------------------
-    // TODO #4: Increment both pointers to the next byte
-    // You need TWO ADD instructions (one for X0, one for X1)
-    // Syntax: ADD Xd, Xn, #1
-    // -------------------------------------------------------------------------
-    
-    // YOUR CODE HERE (two lines)
-    
-    // -------------------------------------------------------------------------
-    // TODO #5: Loop back to copy the next character
-    // Syntax: B label   (Branch - unconditional jump)
-    // -------------------------------------------------------------------------
-    
-    // YOUR CODE HERE
+sum_loop:
+    ADD     X4, X4, X0
+    ADD     X5, X5, X1
+    SUBS    X0, X0, X1
+    B.GT    sum_loop
 
-    // =========================================================================
-    // STEP 3: Signal Completion (Already done for you)
-    // =========================================================================
 done:
-    // When your loop exits (after copying the null terminator),
-    // execution reaches here and YIELD signals success.
     YIELD
 
 // =============================================================================
@@ -103,7 +66,7 @@ done:
 // This section defines the source string and destination buffer in memory.
 // The assembler will place "Hello\0" at address 0x50.
 
-    .data
+    .text
     .org 0x50
 source_string:
     .asciz "Hello"          // "Hello" + null terminator (6 bytes total)
